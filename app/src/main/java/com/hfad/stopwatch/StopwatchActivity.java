@@ -16,7 +16,18 @@ public class StopwatchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
 
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
+        
         runTimer(); // 使用獨立的方法來更新碼表，並且在 activity 裡建立時啟動它
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) { // Activity 被銷毀前會被執行
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
     }
 
     // 當 Start 按錄被點擊時，開始碼表計時
