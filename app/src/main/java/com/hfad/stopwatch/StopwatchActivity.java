@@ -10,6 +10,7 @@ public class StopwatchActivity extends Activity {
 
     private int seconds = 0;  //  記綠經歷的秒數
     private boolean running = false; // 使用 running 來紀綠是否正在計時
+    private boolean wasRunning; //  記錄 onStop() 方法被呼叫之前是否正在計時
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,9 @@ public class StopwatchActivity extends Activity {
         if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
-        
+
         runTimer(); // 使用獨立的方法來更新碼表，並且在 activity 裡建立時啟動它
     }
 
@@ -28,6 +30,22 @@ public class StopwatchActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState) { // Activity 被銷毀前會被執行
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("wasRunning", wasRunning);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        wasRunning = running; // 記錄碼表在 onStop() 方法被呼叫之前時是否正在計時。
+        running = false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (wasRunning) {   // 實作 onStart() 方法，如果碼表原本正在計時，就將它設定成繼續計時。
+            running = true;
+        }
     }
 
     // 當 Start 按錄被點擊時，開始碼表計時
