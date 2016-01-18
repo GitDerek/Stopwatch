@@ -34,15 +34,15 @@ public class StopwatchActivity extends Activity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         wasRunning = running; // 記錄碼表在 onStop() 方法被呼叫之前時是否正在計時。
         running = false;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         if (wasRunning) {   // 實作 onStart() 方法，如果碼表原本正在計時，就將它設定成繼續計時。
             running = true;
         }
