@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class StopwatchActivity extends Activity {
 
-    private int seconds = 0;  //  記綠經歷的秒數
+    private int seconds = 10;  //  記綠經歷的秒數
     private boolean running = false; // 使用 running 來紀綠是否正在計時
     private boolean wasRunning; //  記錄 onStop() 方法被呼叫之前是否正在計時
 
